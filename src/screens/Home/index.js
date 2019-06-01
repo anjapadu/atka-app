@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import {
     Dimensions,
+    ActivityIndicator,
     View,
     TouchableOpacity
 } from 'react-native';
@@ -20,6 +21,7 @@ import {
     GooglePlacesApi
 } from '../../utils';
 import { rem } from '../../helpers';
+import CustomModal from '../../components/Modal';
 
 const {
     height
@@ -274,6 +276,21 @@ class Home extends PureComponent {
                     text={"Quiero Brindar ayuda"}
                 /> */}
             </View>
+
+            {!this.props.position && <CustomModal
+                title={"Buscando ubicación..."}
+            >
+                <View
+                    style={{
+                        paddingVertical: 10 * rem
+                    }}
+                >
+                    <ActivityIndicator
+                        color={"#ad4102"}
+                        size={"large"}
+                    />
+                </View>
+            </CustomModal>}
         </Content>)
     }
 }

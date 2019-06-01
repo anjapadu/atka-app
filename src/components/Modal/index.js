@@ -68,7 +68,7 @@ class CustomModal extends PureComponent {
                 </TouchableOpacity>
                 <Animated.View
                     style={{
-                        backgroundColor: '#fff',
+                        backgroundColor: '#F9EED7',
                         width: width - 16 * rem,
                         marginHorizontal: 6 * rem,
                         alignSelf: 'center',

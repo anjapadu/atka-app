@@ -91,7 +91,7 @@ class Helps extends PureComponent {
                     >
                         <Image
                             resizeMode={"contain"}
-                            source={pet1}
+                            source={par ? pet1 : pet2}
                             style={{
                                 width: '100%',
                                 height: 30 * rem
@@ -211,12 +211,13 @@ class Helps extends PureComponent {
                             <View
                                 style={{
                                     flex: 1,
-                                    paddingHorizontal: 2 * rem
+                                    paddingHorizontal: 2 * rem,
+                                    paddingTop: 2 * rem
                                 }}
                             >
                                 <Image
                                     resizeMode={"contain"}
-                                    source={pet1}
+                                    source={par ? pet1 : pet2} º
                                     style={{
                                         width: '100%',
                                         height: 30 * rem
@@ -305,7 +306,7 @@ class Helps extends PureComponent {
                     })
                 }}
                 onConfirm={() => {
-                    
+
                 }}
             >
                 <Input

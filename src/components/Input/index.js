@@ -24,7 +24,7 @@ export default class Input extends PureComponent {
             style={{
                 alignSelf: 'stretch',
                 marginHorizontal: this.props.marginHorizontal || rem * 16,
-                backgroundColor: '#f2f2f2',
+                backgroundColor: '#fff',
                 borderRadius: rem * 3,
                 display: 'flex',
                 flexDirection: 'row',
