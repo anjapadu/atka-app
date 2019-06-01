@@ -5,7 +5,7 @@ import { rem } from '../../helpers';
 export default (props) => {
     return <Text
         style={{
-            color: '#0a1b5a',
+            color: '#ad4102',
             fontSize: 9 * rem,
             marginBottom: 5 * rem,
             marginHorizontal: 2 * rem,

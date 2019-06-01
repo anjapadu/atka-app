@@ -21,7 +21,7 @@ class DoubleOption extends PureComponent {
                 alignSelf: 'flex-start',
                 marginTop: 10,
                 minWidth: width * 0.4,
-                marginHorizontal: 16 * rem
+                marginHorizontal: 6 * rem
             }}
         >
             <View>

@@ -81,7 +81,7 @@ class SelectModal extends PureComponent {
                             scale: this.scale,
                         }],
                         maxHeight: '70%',
-                        borderColor: '#035197',
+                        borderColor: '#ad4102',
                         borderWidth: 1 * rem
                     }}
                 >
@@ -93,7 +93,7 @@ class SelectModal extends PureComponent {
                             borderTopLeftRadius: 10 * rem,
                             fontSize: 9 * rem,
                             marginBottom: 0,
-                            borderBottomColor: '#035197',
+                            borderBottomColor: '#ad4102',
                             borderBottomWidth: 2
                         }}
                     >Seleccione</H1>

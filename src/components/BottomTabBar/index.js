@@ -91,7 +91,7 @@ class BottomTabBar extends PureComponent {
             style={{
                 display: "flex",
                 flexDirection: 'row',
-                backgroundColor: '#035197'
+                backgroundColor: '#ad4102'
             }}
         >
 

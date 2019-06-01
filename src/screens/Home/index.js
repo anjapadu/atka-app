@@ -131,6 +131,14 @@ class Home extends PureComponent {
 
                 region={this.props.position}
             >
+                {this.props.position && <Marker
+                    pinColor={"#37bb5c"}
+                    title={"Tu posición"}
+                    coordinate={{
+                        longitude: this.props.position.longitude,
+                        latitude: this.props.position.latitude
+                    }}
+                />}
                 {this.props.nearCareCenters.map((item) => {
                     return <Marker
                         key={item.id}

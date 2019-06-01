@@ -6,8 +6,12 @@ import {
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import Button from '../../components/Button';
+import Modal from '../../components/Modal';
+import DoubleOption from '../../components/DoubleOption';
 import H1 from '../../components/H1';
 import { rem } from '../../helpers';
+import Input from '../../components/Input';
+import Br from '../../components/Br';
 
 const options = {
     title: 'Selecciona o toma una foto',
@@ -22,7 +26,9 @@ const options = {
 
 class PhotoScreen extends PureComponent {
     state = {
-        imageToShare: null
+        imageToShare: null,
+        isDonation: false,
+        showModal: false
     }
     _onPhotoAdd() {
         ImagePicker.showImagePicker(options, (response) => {
@@ -75,7 +81,7 @@ class PhotoScreen extends PureComponent {
             >
                 <H1
                     style={{
-                        color: !this.state.imageToShare ? '#0a1b5a' : '#fff'
+                        color: !this.state.imageToShare ? '#ad4102' : '#fff'
                     }}
                 >Ayuda a un anemaleto =)</H1>
 
@@ -97,7 +103,9 @@ class PhotoScreen extends PureComponent {
                         }}
                         // onPress={this._onPhotoAdd.bind(this)}
                         text={"Subir"}
-
+                        onPress={_ => this.setState({
+                            showModal: true
+                        })}
                     />
                     <Button
                         style={{
@@ -109,6 +117,37 @@ class PhotoScreen extends PureComponent {
                     />
                 </View>}
             </View>
+            {this.state.showModal && <Modal
+                onRequestClose={_ => this.setState({
+                    showModal: false
+                })}
+                cancelText={"Cancelar"}
+                onConfirm={_ => {
+
+                }}
+                title={"Completar"}
+            >
+                <DoubleOption
+
+                    changeOption={_ => {
+                        this.setState({
+                            isDonation: !this.state.isDonation
+                        })
+                    }}
+                    label={"Es donación"}
+                    selected={this.state.isDonation}
+                />
+
+                {this.state.isDonation && <Input
+                    placeholder={"Ingresa monto meta"}
+                    marginHorizontal={5 * rem}
+                    label={"Monto meta"}
+                    icon={"coins"}
+                />}
+                <Br />
+                <Br />
+                <Br />
+            </Modal>}
         </View >)
     }
 }

@@ -17,7 +17,7 @@ class Button extends PureComponent {
         }
         if (this.props.secondary)
             return '#fdb337'
-        return '#035197'
+        return '#ad4102'
     }
     render() {
         return (<TouchableOpacity

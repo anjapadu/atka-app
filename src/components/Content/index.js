@@ -25,12 +25,12 @@ class Content extends PureComponent {
                     flex: 1,
                     marginTop: Platform.OS == 'ios' ? 20 : 0,
                     alignItems: 'center',
-                    backgroundColor: '#fff',
+                    backgroundColor: '#F9EED7',
                     ...(this.props.style || {})
                 }}
             >
                 <StatusBar
-                    backgroundColor={'#035197'}
+                    backgroundColor={'#ad4102'}
                 />
 
                 {this.props.children}
@@ -39,7 +39,7 @@ class Content extends PureComponent {
         return (<KeyboardAvoidingView
             style={{
                 flex: 1,
-                backgroundColor: '#FFF',
+                backgroundColor: '#F9EED7',
                 marginTop: Platform.OS == 'ios' ? 20 : 0,
             }}
             behavior={Platform.OS === "ios" ? "padding" : null}
@@ -55,7 +55,7 @@ class Content extends PureComponent {
                 }}
             >
                 <StatusBar
-                    backgroundColor={'#035197'}
+                    backgroundColor={'#ad4102'}
                 />
                 {this.props.children}
             </ScrollView>
