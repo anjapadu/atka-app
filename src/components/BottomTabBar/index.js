@@ -37,6 +37,18 @@ class BottomTabBar extends PureComponent {
             route: 'Home',
             icon: 'home',
             text: 'Inicio'
+        }, {
+            route: 'Camera',
+            icon: 'camera',
+            text: 'Share'
+        }, {
+            route: 'Helps',
+            icon: 'paw',
+            text: "Tus ayudas"
+        }, {
+            route: 'Profile',
+            icon: 'user',
+            text: "Perfil"
         }]
         return routes.map((item, index) => {
             return <TouchableOpacity
@@ -47,7 +59,7 @@ class BottomTabBar extends PureComponent {
 
                 }}
                 onPress={() => {
-                   
+
                     this.props.navigation.navigate(item.route)
                 }}
             >

@@ -133,6 +133,7 @@ class Home extends PureComponent {
             >
                 {this.props.nearCareCenters.map((item) => {
                     return <Marker
+                        key={item.id}
                         title={item.name}
                         coordinate={{
                             longitude: item.position.longitude,

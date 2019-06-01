@@ -10,6 +10,9 @@ import Splash from '../screens/Splash';
 import Login from '../screens/Login';
 
 import Home from '../screens/Home';
+import Camera from '../screens/Camera';
+import Helps from '../screens/Helps';
+import Profile from '../screens/Profile';
 
 import BottomTabBar from '../components/BottomTabBar'
 
@@ -23,6 +26,9 @@ const AuthStack = createStackNavigator({
 
 const SecureApp = createBottomTabNavigator({
     Home: Home,
+    Camera: Camera,
+    Helps: Helps,
+    Profile: Profile
 }, {
         tabBarComponent: props => <BottomTabBar
             {...props}
