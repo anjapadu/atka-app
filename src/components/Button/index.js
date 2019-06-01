@@ -42,12 +42,12 @@ class Button extends PureComponent {
                 paddingVertical: this.props.small ? 3 * rem : 5.5 * rem,
                 borderWidth: 2,
                 borderColor: this._getBackgroundColor(),
-                backgroundColor: this.props.outlined ? (this.state.isPressed ? this._getBackgroundColor() : '#fff') : this._getBackgroundColor(),
+                backgroundColor: this.props.outlined ? (this.state.isPressed ? this._getBackgroundColor() : '#F9EED7') : this._getBackgroundColor(),
                 ...(this.props.style || {}),
             }}
         >
             {this.props.isLoading ? <ActivityIndicator
-                color={this.props.outlined ? this._getBackgroundColor() : "#fff"}
+                color={this.props.outlined ? this._getBackgroundColor() : "#F9EED7"}
                 size={"small"}
             /> : <Text
                 style={{

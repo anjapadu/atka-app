@@ -13,6 +13,7 @@ import { rem } from '../../helpers';
 import Input from '../../components/Input';
 import Br from '../../components/Br';
 import Logo from '../../components/Logo';
+import FullScreenLoader from '../../components/FullScreenLoader';
 
 const options = {
     title: 'Selecciona o toma una foto',
@@ -30,7 +31,10 @@ class PhotoScreen extends PureComponent {
         imageToShare: null,
         isDonation: false,
         showModal: false,
-        amount: ''
+        amount: '',
+        isLoading: false,
+        showConfirm: false,
+        errorAmount: false
     }
     _onPhotoAdd() {
         ImagePicker.showImagePicker(options, (response) => {
@@ -54,7 +58,30 @@ class PhotoScreen extends PureComponent {
             }
         });
     }
+    _onSubmit() {
+        if (this.state.isDonation && this.state.amount.trim() == '') {
+            return this.setState({
+                errorAmount: 'Ingresa un monto válido'
+            })
+        }
+        this.setState({
+            isLoading: true,
+            showModal: false,
+        }, () => {
+            setTimeout(() => {
+                this.setState({
+                    showConfirm: true,
+                    isLoading: false,
+                    amount: '',
+                    imageToShare: null
+                })
+            }, 2000);
+        })
+    }
     render() {
+        if (this.state.isLoading) {
+            return <FullScreenLoader />
+        }
         return (<View
             style={{
                 flex: 1,
@@ -126,7 +153,7 @@ class PhotoScreen extends PureComponent {
                 })}
                 cancelText={"Cancelar"}
                 onConfirm={_ => {
-
+                    this._onSubmit()
                 }}
                 title={"Completar"}
             >
@@ -142,6 +169,7 @@ class PhotoScreen extends PureComponent {
                 />
 
                 {this.state.isDonation && <Input
+                    error={this.state.errorAmount}
                     value={this.state.amount}
                     onChangeText={(amount) => {
                         this.setState({
@@ -157,6 +185,27 @@ class PhotoScreen extends PureComponent {
                 <Br />
                 <Br />
                 <Br />
+            </Modal>}
+
+            {this.state.showConfirm && <Modal
+                title={"Confirmación"}
+                cancelText={"Aceptar"}
+                onRequestClose={_ => {
+                    this.setState({
+                        showConfirm: false
+                    }, _ => {
+                        this.props.navigation.navigate('Helps')
+                    })
+                }}
+            >
+                <Text
+                    style={{
+                        color: '#000',
+                        fontSize: 8 * rem,
+                        marginVertical: 10 * rem,
+                        marginHorizontal: 10 * rem,
+                    }}
+                >Felicidades!!! Tu solicitud de ayuda fue enviada exitosamente.</Text>
             </Modal>}
         </View >)
     }
