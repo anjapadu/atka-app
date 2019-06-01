@@ -19,13 +19,79 @@ import Br from '../../components/Br';
 import pet1 from '../../images/pet1.jpg'
 import pet2 from '../../images/pet2.jpeg'
 
+
 import Modal from '../../components/Modal';
+import FullScreenLoader from '../../components/FullScreenLoader';
 
 class Helps extends PureComponent {
     state = {
         showModalDonation: false,
         showModalContact: false,
-        donationAmount: ''
+        donationAmount: '',
+        cardName: '',
+        cardNumber: '',
+        cardDate: '',
+        cardCVV: '',
+
+        showConfirm: false,
+        isLoading: false
+    }
+
+    _onSubmit() {
+        this.setState({
+            errorAmount: false,
+            errorName: false,
+            errorCard: false,
+            errorDate: false,
+            errorCVV: false
+        })
+        if (this.state.showModalDonation) {
+
+            if (this.state.donationAmount.trim() === '') {
+                return this.setState({
+                    errorAmount: 'Ingrese monto'
+                })
+            }
+            if (this.state.cardName.trim().length < 6) {
+                return this.setState({
+                    errorName: 'Ingrese nombre de la tarjeta'
+                })
+            }
+            if (this.state.cardNumber.trim().length < 6) {
+                return this.setState({
+                    errorCard: 'Numero de tarjeta inválido'
+                })
+            }
+            if (this.state.cardDate.trim().length < 7) {
+                return this.setState({
+                    errorDate: 'Ingrese fecha de vencimiento válida'
+                })
+            }
+            if (this.state.cardCVV.trim().length < 3) {
+                return this.setState({
+                    errorCVV: 'Ingrese CVV válido'
+                })
+            }
+
+        }
+
+        this.setState({
+            isLoading: true
+        }, () => {
+            setTimeout(() => {
+                this.setState({
+                    showConfirm: true,
+                    showModalDonation: false,
+                    showModalContact: false,
+                    isLoading: false,
+                    donationAmount: '',
+                    cardName: '',
+                    cardNumber: '',
+                    cardDate: '',
+                    cardCVV: '',
+                })
+            }, 2500);
+        })
     }
     _renderHelps() {
         if (!this.props.helps.length == 0) {
@@ -44,7 +110,6 @@ class Helps extends PureComponent {
                 />
             </React.Fragment>
         }
-
         return [{
 
         }, {}, {}, {}].map((item, index) => {
@@ -135,6 +200,9 @@ class Helps extends PureComponent {
         })
     }
     render() {
+        if (this.state.isLoading) {
+            return <FullScreenLoader />
+        }
         return (<Content
             style={{
                 flex: 1,
@@ -299,6 +367,7 @@ class Helps extends PureComponent {
                 keyExtractor={(item, index) => (`_${index}`)}
             />
             {this.state.showModalDonation && < Modal
+
                 title={"Donación"}
                 onRequestClose={() => {
                     this.setState({
@@ -306,49 +375,79 @@ class Helps extends PureComponent {
                     })
                 }}
                 onConfirm={() => {
-
+                    this._onSubmit()
                 }}
             >
                 <Input
+                    onChangeText={(text) => {
+                        this.setState({
+                            donationAmount: text
+                        })
+                    }}
                     label={"Monto a donar"}
                     keyboardType={"numeric"}
                     marginHorizontal={5 * rem}
                     placeholder={"Monto en soles"}
                     icon={"coins"}
                     value={this.state.donationAmount}
+                    error={this.state.errorAmount}
                 />
 
                 <Input
+                    onChangeText={(text) => {
+                        this.setState({
+                            cardName: text
+                        })
+                    }}
                     label={"Nombre completo"}
                     marginHorizontal={5 * rem}
                     placeholder={"Monto en soles"}
                     icon={"user"}
-                    value={this.state.donationAmount}
+                    error={this.state.errorName}
+                    value={this.state.cardName}
                 />
 
                 <Input
+                    onChangeText={(text) => {
+                        this.setState({
+                            cardNumber: text
+                        })
+                    }}
+                    error={this.state.errorCard}
                     label={"Tarjeta"}
                     keyboardType={"numeric"}
                     marginHorizontal={5 * rem}
                     placeholder={"# tarjeta"}
                     icon={"credit-card"}
-                    value={this.state.donationAmount}
+                    value={this.state.cardNumber}
                 />
                 <Input
+                    onChangeText={(text) => {
+                        this.setState({
+                            cardDate: text
+                        })
+                    }}
+                    error={this.state.errorDate}
                     label={"Fecha vencimiento"}
                     keyboardType={"numeric"}
                     marginHorizontal={5 * rem}
                     placeholder={"MM/YYYY"}
                     icon={"calendar"}
-                    value={this.state.donationAmount}
+                    value={this.state.cardDate}
                 />
                 <Input
+                    onChangeText={(text) => {
+                        this.setState({
+                            cardCVV: text
+                        })
+                    }}
+                    error={this.state.errorCVV}
                     label={"CVV"}
                     keyboardType={"numeric"}
                     marginHorizontal={5 * rem}
                     placeholder={"Codigo de 3 dígitos"}
                     icon={"lock"}
-                    value={this.state.donationAmount}
+                    value={this.state.cardCVV}
                 />
             </Modal>}
 
@@ -359,6 +458,9 @@ class Helps extends PureComponent {
                         showModalContact: false
                     })
                 }}
+            // onConfirm={() => {
+            //     this._onSubmit()
+            // }}
             >
                 <Input
                     label={"Nombre de la persona"}
@@ -381,6 +483,27 @@ class Helps extends PureComponent {
                 <Br />
                 <Br />
                 <Br />
+            </Modal>}
+
+            {this.state.showConfirm && <Modal
+                title={"Confirmación"}
+                cancelText={"Aceptar"}
+                onRequestClose={_ => {
+                    this.setState({
+                        showConfirm: false
+                    }, _ => {
+                        this.props.navigation.navigate('Helps')
+                    })
+                }}
+            >
+                <Text
+                    style={{
+                        color: '#000',
+                        fontSize: 8 * rem,
+                        marginVertical: 10 * rem,
+                        marginHorizontal: 10 * rem,
+                    }}
+                >Felicidades!!! Tu solicitud de ayuda fue enviada exitosamente.</Text>
             </Modal>}
         </Content>)
     }

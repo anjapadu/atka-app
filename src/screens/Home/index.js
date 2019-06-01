@@ -210,7 +210,8 @@ class Home extends PureComponent {
             <View
                 style={{
                     position: 'absolute',
-                    top: 50,
+                    top: 1,
+                    marginHorizontal: 1,
                     flexDirection: 'row',
                     alignItems: 'center',
                     justifyContent: 'center'
@@ -220,7 +221,7 @@ class Home extends PureComponent {
                     style={{
                         backgroundColor: '#ad4102',
                         flex: 1,
-                        paddingVertical: 15 * rem,
+                        paddingVertical: 8 * rem,
                         borderRightColor: '#FFF',
                         borderRightWidth: 1,
                         justifyContent: 'center',
@@ -240,7 +241,7 @@ class Home extends PureComponent {
                     style={{
                         backgroundColor: '#ad4102',
                         flex: 1,
-                        paddingVertical: 15 * rem,
+                        paddingVertical: 8 * rem,
                         justifyContent: 'center',
                         alignItems: 'center'
 
