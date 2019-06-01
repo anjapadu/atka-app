@@ -5,8 +5,10 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import FullScreenLoader from '../../components/FullScreenLoader';
-import { isLoggedSelector } from '../../selectors';
-import { getParams } from '../../actions'
+import { isLoggedSelector, positionSelector } from '../../selectors';
+import {
+    setUserReducer
+} from '../../actions'
 class Splash extends Component {
     async  requirePositionPermission() {
         try {
@@ -21,9 +23,24 @@ class Splash extends Component {
                 },
             );
             if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                console.log('You can use the camera');
+                console.log('You can use the position');
             } else {
-                console.log('Camera permission denied');
+                console.log('Error with the position');
+            }
+            const granted2 = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
+                {
+                    title: 'Cool dog app application',
+                    message: 'Dame permiso',
+                    buttonNeutral: 'Ask Me Later',
+                    buttonNegative: 'Cancel',
+                    buttonPositive: 'OK',
+                },
+            );
+            if (granted2 === PermissionsAndroid.RESULTS.GRANTED) {
+                console.log('You can use the position 2');
+            } else {
+                console.log('Error with the position 2');
             }
         } catch (err) {
             console.warn(err);
@@ -31,18 +48,11 @@ class Splash extends Component {
     }
 
     async componentDidMount() {
-        navigator.geolocation.getCurrentPosition(
-            position => {
-                const location = JSON.stringify(position);
 
-                this.setState({ location });
-            },
-            error => Alert.alert(error.message),
-            { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-        );
 
 
         this.requirePositionPermission();
+
         setTimeout(() => {
             this._validateLogged();
         }, 2500);
@@ -62,14 +72,15 @@ class Splash extends Component {
 
 const mapStateToProps = (state) => {
     const {
-        isLogged
+        isLogged,
     } = isLoggedSelector(state)
 
     return {
-        isLogged
+        isLogged,
+        position: positionSelector(state)
     }
 }
 
 export default connect(mapStateToProps, {
-    getParams
+    setUserReducer
 })(Splash);

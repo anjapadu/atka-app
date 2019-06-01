@@ -145,6 +145,7 @@ dependencies {
     implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation 'com.facebook.fresco:animated-gif:1.10.0'
     implementation project(':react-native-maps')
+    // compile "com.google.android.gms:play-services:16.1.0"
 
 
 }

@@ -6,3 +6,8 @@ export const isLoggedSelector = createSelector(
         isLogged
     })
 )
+
+export const positionSelector = createSelector(
+    state => state.user.position,
+    (position) => position
+)
