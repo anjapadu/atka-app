@@ -26,6 +26,23 @@ class GooglePlacesApi {
             console.log(e);
         }
     }
+    async getNearPetsToHelp() {
+        try {
+
+            return Axios.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json', {
+                params: {
+                    key: this.apiKey,
+                    location: this.location,
+                    radius: this.radius,
+                    type: this.type
+                }
+            })
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+
 }
 
 export {

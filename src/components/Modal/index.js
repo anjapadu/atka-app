@@ -51,7 +51,7 @@ class CustomModal extends PureComponent {
             >
                 <TouchableOpacity
                     activeOpacity={1}
-                    onPress={this.props.onRequestClose}
+                    // onPress={this.props.onRequestClose}
                     style={{
                         position: 'absolute',
                         width: '100%',

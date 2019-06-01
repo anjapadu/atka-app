@@ -3,7 +3,9 @@ import {
 import { SET_REDUCER_CARE_CENTERS } from '../constants/carecenters';
 
 const INITIAL_STATE = {
-    nearCareCenters: []
+    nearCareCenters: [],
+
+    nearHelpNeeded: []
 }
 
 export default (state = INITIAL_STATE, { type, payload }) => {

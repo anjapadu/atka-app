@@ -20,7 +20,7 @@ class DoubleOption extends PureComponent {
                 flexDirection: 'column',
                 alignSelf: 'flex-start',
                 marginTop: 10,
-                minWidth: width * 0.4,
+                minWidth: width * 0.8,
                 marginHorizontal: 6 * rem
             }}
         >
@@ -57,7 +57,7 @@ class DoubleOption extends PureComponent {
                                 color: selected ? '#FFF' : '#a8a8a8',
                                 fontSize: 8 * rem
                             }}
-                        >Si</Text>
+                        >Donación</Text>
                     </View>
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback
@@ -80,7 +80,7 @@ class DoubleOption extends PureComponent {
                                 fontSize: 8 * rem
 
                             }}
-                        >No</Text>
+                        >Adopción</Text>
                     </View>
                 </TouchableWithoutFeedback>
             </View>

@@ -50,7 +50,7 @@ class Content extends PureComponent {
                 ref={ref => this.scroll = ref}
                 contentContainerStyle={{
                     alignItems: 'center',
-                    backgroundColor: '#fff',
+                    backgroundColor: '#F9EED7',
                     ...(this.props.style || {})
                 }}
             >

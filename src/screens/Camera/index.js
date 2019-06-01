@@ -12,6 +12,7 @@ import H1 from '../../components/H1';
 import { rem } from '../../helpers';
 import Input from '../../components/Input';
 import Br from '../../components/Br';
+import Logo from '../../components/Logo';
 
 const options = {
     title: 'Selecciona o toma una foto',
@@ -28,7 +29,8 @@ class PhotoScreen extends PureComponent {
     state = {
         imageToShare: null,
         isDonation: false,
-        showModal: false
+        showModal: false,
+        amount: ''
     }
     _onPhotoAdd() {
         ImagePicker.showImagePicker(options, (response) => {
@@ -60,7 +62,7 @@ class PhotoScreen extends PureComponent {
                 alignItems: 'center',
             }}
         >
-
+            <Logo />
             {this.state.imageToShare && <Image
                 source={this.state.imageToShare}
                 style={{
@@ -134,11 +136,18 @@ class PhotoScreen extends PureComponent {
                             isDonation: !this.state.isDonation
                         })
                     }}
-                    label={"Es donación"}
+                    label={"¿Es donación o adopción?"}
                     selected={this.state.isDonation}
                 />
 
                 {this.state.isDonation && <Input
+                    value={this.state.amount}
+                    onChangeText={(amount) => {
+                        this.setState({
+                            amount
+                        })
+                    }}
+                    keyboardType={"numeric"}
                     placeholder={"Ingresa monto meta"}
                     marginHorizontal={5 * rem}
                     label={"Monto meta"}

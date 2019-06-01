@@ -1,22 +1,25 @@
 import React, { PureComponent } from 'react';
 import {
-    Dimensions
+    Dimensions,
+    View,
+    TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
 import Content from '../../components/Content';
 import { withNavigationFocus } from 'react-navigation'
-import Text from '../../components/Text';
 import MapView, { Marker } from 'react-native-maps';
 import {
     setUserReducer,
     setReducerCareCenter
 } from '../../actions';
+import Text from '../../components/Text';
 import { positionSelector } from '../../selectors';
 import Axios from 'axios';
 import Button from '../../components/Button';
 import {
     GooglePlacesApi
 } from '../../utils';
+import { rem } from '../../helpers';
 
 const {
     height
@@ -100,12 +103,47 @@ class Home extends PureComponent {
                         }
                     })
                 })
+                this.props.setReducerCareCenter({
+                    key: 'nearHelpNeeded',
+                    value: []
+                })
             }
 
         } catch (e) {
             console.log({ e });
         }
 
+    }
+    async _onSearchPetsToHelp() {
+        try {
+            const { longitude, latitude } = this.props.position;
+
+            if (latitude && longitude) {
+                const GPA = new GooglePlacesApi(latitude, longitude, 1500, 'restaurant');
+
+                const { data } = await GPA.getNearPlaces();
+                console.log(data.results)
+                this.props.setReducerCareCenter({
+                    key: 'nearHelpNeeded',
+                    value: data.results.map(({ geometry, name, id }) => {
+                        return {
+                            position: {
+                                latitude: geometry.location.lat,
+                                longitude: geometry.location.lng
+                            },
+                            name,
+                            id
+                        }
+                    })
+                })
+                this.props.setReducerCareCenter({
+                    key: 'nearCareCenters',
+                    value: []
+                })
+            }
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     render() {
@@ -134,6 +172,7 @@ class Home extends PureComponent {
                 {this.props.position && <Marker
                     pinColor={"#37bb5c"}
                     title={"Tu posición"}
+                    image={require('../../images/person.png')}
                     coordinate={{
                         longitude: this.props.position.longitude,
                         latitude: this.props.position.latitude
@@ -143,6 +182,21 @@ class Home extends PureComponent {
                     return <Marker
                         key={item.id}
                         title={item.name}
+                        image={require('../../images/vet.jpg')}
+                        coordinate={{
+                            longitude: item.position.longitude,
+                            latitude: item.position.latitude
+                        }}
+                    />
+                })}
+                {this.props.nearHelpNeeded.map((item) => {
+                    return <Marker
+
+                        // pinColor={"blue"}
+
+                        key={item.id}
+                        // title={item.name}
+                        image={require('../../images/paw.jpg')}
                         coordinate={{
                             longitude: item.position.longitude,
                             latitude: item.position.latitude
@@ -151,16 +205,75 @@ class Home extends PureComponent {
                 })}
 
             </MapView>
-            <Button
-                onPress={this._onSearch.bind(this)}
+            <View
                 style={{
                     position: 'absolute',
                     top: 50,
-                    alignSelf: 'center'
-                    // left: 50
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'center'
                 }}
-                text={"Buscar ayuda"}
-            />
+            >
+                <TouchableOpacity
+                    style={{
+                        backgroundColor: '#ad4102',
+                        flex: 1,
+                        paddingVertical: 15 * rem,
+                        borderRightColor: '#FFF',
+                        borderRightWidth: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}
+                    onPress={this._onSearch.bind(this)}
+                >
+                    <Text
+                        style={{
+                            color: '#fff',
+                            fontSize: 7 * rem
+                        }}
+                    >Buscar ayuda</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={this._onSearchPetsToHelp.bind(this)}
+                    style={{
+                        backgroundColor: '#ad4102',
+                        flex: 1,
+                        paddingVertical: 15 * rem,
+                        justifyContent: 'center',
+                        alignItems: 'center'
+
+                    }}
+                >
+                    <Text
+                        style={{
+                            color: '#fff',
+                            fontSize: 7 * rem
+                        }}
+                    >Brindar ayuda</Text>
+                </TouchableOpacity>
+                {/* <Button
+                    onPress={this._onSearch.bind(this)}
+                    style={{
+                        flex: 1
+                        // position: 'absolute',
+                        // top: 50,
+                        // alignSelf: 'center'
+                        // // left: 50
+                    }}
+                    text={"Buscar ayuda"}
+                />
+                <Button
+                    onPress={this._onSearch.bind(this)}
+                    style={{
+                        flex: 1
+                        // position: 'absolute',
+                        // top: 50,
+                        // alignSelf: 'center'
+                        // // left: 50
+                    }}
+                    text={"Quiero Brindar ayuda"}
+                /> */}
+            </View>
         </Content>)
     }
 }
@@ -169,7 +282,8 @@ const mapStateToProps = (state) => {
 
     return {
         position: positionSelector(state),
-        nearCareCenters: state.carecenters.nearCareCenters
+        nearCareCenters: state.carecenters.nearCareCenters,
+        nearHelpNeeded: state.carecenters.nearHelpNeeded
     }
 }
 
