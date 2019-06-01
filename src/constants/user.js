@@ -1,0 +1,1 @@
+export const SET_USER_REDUCER = "user/set_user_reducer";

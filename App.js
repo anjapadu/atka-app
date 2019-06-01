@@ -6,44 +6,75 @@
  * @flow
  */
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import React, { PureComponent } from 'react';
+import {
+  Provider
+} from 'react-redux';
+import {
+  PersistGate
+} from 'redux-persist/integration/react'
+import AppRouter from './src/router'
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import { NetInfo } from 'react-native';
+// if (Platform.OS == 'ios')
+// Icon.loadFont();
+import createStore from './src/store';
+import FullScreenLoader from './src/components/FullScreenLoader';
+const {
+  store,
+  persistor
+} = createStore();
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
 
-type Props = {};
-export default class App extends Component<Props> {
+export default class App extends PureComponent {
+  componentDidMount() {
+    // this.CheckConnectivity()
+  }
+  // CheckConnectivity = () => {
+  //   // For Android devices
+  //   if (Platform.OS === "android") {
+  //     NetInfo.isConnected.fetch().then(isConnected => {
+  //       if (isConnected) {
+  //         // Alert.alert("You are online!");
+  //       } else {
+  //         // Alert.alert("You are offline!");
+  //       }
+  //     });
+  //   } else {
+  //     // For iOS devices
+  //     NetInfo.isConnected.addEventListener(
+  //       "connectionChange",
+  //       this.handleFirstConnectivityChange
+  //     );
+  //   }
+  // };
+
+  // handleFirstConnectivityChange = isConnected => {
+  //   NetInfo.isConnected.removeEventListener(
+  //     "connectionChange",
+  //     this.handleFirstConnectivityChange
+  //   );
+
+  //   if (isConnected === false) {
+  //     // Alert.alert("You are offline!");
+  //   } else {
+  //     // Alert.alert("You are online!");
+  //   }
+  // };
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
+      <Provider
+        store={store}
+      >
+        <PersistGate
+          loading={<FullScreenLoader
+            startOn
+          />}
+          persistor={persistor}
+        >
+          <AppRouter />
+        </PersistGate>
+      </Provider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
