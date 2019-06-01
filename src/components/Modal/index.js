@@ -77,7 +77,7 @@ class CustomModal extends PureComponent {
                         transform: [{
                             scale: this.scale,
                         }],
-                        maxHeight: '70%',
+                        maxHeight: '100%',
                         borderColor: '#ad4102',
                         borderWidth: 1* rem
                     }}

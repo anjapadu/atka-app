@@ -12,14 +12,21 @@ import { } from '../../actions';
 import H1 from '../../components/H1';
 import { rem } from '../../helpers';
 import Button from '../../components/Button';
+import Input from '../../components/Input';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Content from '../../components/Content';
 import Br from '../../components/Br';
 import pet1 from '../../images/pet1.jpg'
 import pet2 from '../../images/pet2.jpeg'
 
-class Helps extends PureComponent {
+import Modal from '../../components/Modal';
 
+class Helps extends PureComponent {
+    state = {
+        showModalDonation: false,
+        showModalContact: false,
+        donationAmount: ''
+    }
     _renderHelps() {
         if (!this.props.helps.length == 0) {
             return <React.Fragment>
@@ -228,6 +235,9 @@ class Helps extends PureComponent {
                                 <Br />
                                 <Br />
                                 {par ? <Button
+                                    onPress={_ => this.setState({
+                                        showModalContact: true
+                                    })}
                                     style={{
                                         marginTop: 0,
                                         marginBottom: 0,
@@ -238,6 +248,9 @@ class Helps extends PureComponent {
                                     small
                                     text={"Contactar"}
                                 /> : <Button
+                                        onPress={_ => this.setState({
+                                            showModalDonation: true
+                                        })}
                                         style={{
                                             marginTop: 0,
                                             marginBottom: 0,
@@ -284,6 +297,90 @@ class Helps extends PureComponent {
                 }, {}, {}, {}, {}, {}, {}, {}, {}, {}]}
                 keyExtractor={(item, index) => (`_${index}`)}
             />
+            {this.state.showModalDonation && < Modal
+                title={"Donación"}
+                onRequestClose={() => {
+                    this.setState({
+                        showModalDonation: false
+                    })
+                }}
+                onConfirm={() => {
+                    
+                }}
+            >
+                <Input
+                    label={"Monto a donar"}
+                    keyboardType={"numeric"}
+                    marginHorizontal={5 * rem}
+                    placeholder={"Monto en soles"}
+                    icon={"coins"}
+                    value={this.state.donationAmount}
+                />
+
+                <Input
+                    label={"Nombre completo"}
+                    marginHorizontal={5 * rem}
+                    placeholder={"Monto en soles"}
+                    icon={"user"}
+                    value={this.state.donationAmount}
+                />
+
+                <Input
+                    label={"Tarjeta"}
+                    keyboardType={"numeric"}
+                    marginHorizontal={5 * rem}
+                    placeholder={"# tarjeta"}
+                    icon={"credit-card"}
+                    value={this.state.donationAmount}
+                />
+                <Input
+                    label={"Fecha vencimiento"}
+                    keyboardType={"numeric"}
+                    marginHorizontal={5 * rem}
+                    placeholder={"MM/YYYY"}
+                    icon={"calendar"}
+                    value={this.state.donationAmount}
+                />
+                <Input
+                    label={"CVV"}
+                    keyboardType={"numeric"}
+                    marginHorizontal={5 * rem}
+                    placeholder={"Codigo de 3 dígitos"}
+                    icon={"lock"}
+                    value={this.state.donationAmount}
+                />
+            </Modal>}
+
+            {this.state.showModalContact && < Modal
+                title={"Contacto"}
+                onRequestClose={() => {
+                    this.setState({
+                        showModalContact: false
+                    })
+                }}
+            >
+                <Input
+                    label={"Nombre de la persona"}
+                    disabled
+                    // keyboardType={"numeric"}
+                    marginHorizontal={5 * rem}
+                    // placeholder={"Monto en soles"}
+                    icon={"user"}
+                    value={'Gustavo Yance Cabieses'}
+                />
+                <Input
+                    label={"Teléfono de contacto"}
+                    disabled
+                    // keyboardType={"numeric"}
+                    marginHorizontal={5 * rem}
+                    // placeholder={"Monto en soles"}
+                    icon={"mobile"}
+                    value={'+51 996699719'}
+                />
+                <Br />
+                <Br />
+                <Br />
+            </Modal>}
         </Content>)
     }
 }
